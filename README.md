@@ -62,3 +62,5 @@ Requirements
 ----
 
 [Python](http://www.python.org/download/) version **3.x** is required for running this program.
+
+Tested on Python 3.13.
