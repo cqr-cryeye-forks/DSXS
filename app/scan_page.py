@@ -14,6 +14,7 @@ from app.constants import DOM_FILTER_REGEX, DOM_PATTERNS, PREFIX_SUFFIX_LENGTH, 
 def scan_page(url, headers: dict, data=None) -> dict:
     result: dict = {
         "possible_xss_vulnerable": False,
+        "severity_level": "info",
         "xss": [],
     }
 
@@ -24,6 +25,7 @@ def scan_page(url, headers: dict, data=None) -> dict:
     if dom:
         print("Page itself appears to be XSS vulnerable (DOM)")
         result['possible_xss_vulnerable'] = True
+        result["severity_level"] = "low"
         print(f"{dom.group(0)}")
         result["possible_xss"] = dom.group(0).replace("<script>", "").replace("</script>", "").strip()
 
@@ -77,6 +79,8 @@ def scan_page(url, headers: dict, data=None) -> dict:
                                         })
 
                                         found = True
+                                        result["severity_level"] = "medium"
+
                                     break
 
     except KeyboardInterrupt:
